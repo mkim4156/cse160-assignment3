@@ -473,9 +473,15 @@ function keydown(ev){
       g_eye.sub(d);
       g_at.sub(d); // Correct: Subtract the change (d) from g_at
   } else if (ev.keyCode == 65) { // A - Left
-    rotateView(-5); // Use rotateView for Q and E too
-} else if (ev.keyCode == 68) { // D - Right
-    rotateView(5);  // Use rotateView for Q and E too
+    var d = new Vector3().set(g_at).sub(g_eye).normalize(); // Create a new Vector3
+    var leftDirection = Vector3.cross(g_up, d).normalize(); // Normalize leftDirection
+    g_eye.add(leftDirection);
+    g_at.add(leftDirection); // Correct: Add the left direction to g_at
+    } else if (ev.keyCode == 68) { // D - Right
+      var d = new Vector3().set(g_at).sub(g_eye).normalize(); // Create a new Vector3
+      var rightDirection = Vector3.cross(d, g_up).normalize(); // Normalize rightDirection
+      g_eye.add(rightDirection);
+      g_at.add(rightDirection); // Correct: Add the right direction to g_at
 } else if (ev.keyCode == 81) { // Q - Rotate Left
     rotateView(-5); // Use rotateView for Q and E too
 } else if (ev.keyCode == 69) { // E - Rotate Right
